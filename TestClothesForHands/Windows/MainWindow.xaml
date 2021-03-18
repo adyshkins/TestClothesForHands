@@ -1,0 +1,187 @@
+﻿<Window x:Class="TestClothesForHands.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TestClothesForHands"
+        mc:Ignorable="d"
+        Title="ClothesForHands" 
+        Height="800" 
+        Width="1366"
+        MinHeight="450"
+        MinWidth="800"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="45"/>
+            <RowDefinition Height="45"/>
+            <RowDefinition Height="8*"/>
+            <RowDefinition Height="45"/>
+            <RowDefinition Height="45"/>
+            <RowDefinition Height="45"/>
+            <RowDefinition Height="45"/>
+        </Grid.RowDefinitions>
+
+        <!-- Количество записей -->
+        <WrapPanel HorizontalAlignment="Right"
+                   VerticalAlignment="Center">
+
+            <TextBlock Text="Количество записей"
+                       FontSize="15"
+                       VerticalAlignment="Center"
+                       Margin="10 0"/>
+
+            <TextBlock x:Name="tbStartCount" 
+                       Text="0"
+                       FontSize="15"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Center"
+                       Margin="10 0"/>
+
+            <TextBlock Text="Из"
+                       FontSize="15"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Center"
+                       Margin="10 0"/>
+
+            <TextBlock x:Name="tbAllCount" 
+                       Text="0"
+                       FontSize="15"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Center"
+                       Margin="10 0 30 0"/>
+        </WrapPanel>
+
+        <!-- Строка поиска и сотрировки -->
+
+        <WrapPanel Grid.Row="1">
+            <TextBox x:Name="txtSearch"
+                     Width="250"
+                     FontSize="25"
+                     VerticalAlignment="Center"
+                     Margin="30 0 0 0"
+                     TextChanged="txtSearch_TextChanged"/>
+
+            <ComboBox x:Name="cmbSort"
+                      Width="250"
+                      FontSize="25"
+                      VerticalAlignment="Center"
+                      Margin="30 0 0 0"
+                      SelectedIndex="0"
+                      SelectionChanged="cmbSort_SelectionChanged"/>
+
+            <ComboBox x:Name="cmbFiltr"
+                      Width="250"
+                      FontSize="25"
+                      VerticalAlignment="Center"
+                      Margin="30 0 0 0"
+                      SelectedIndex="0"
+                      SelectionChanged="cmbFiltr_SelectionChanged"/>
+
+        </WrapPanel>
+
+        <!-- Таблица метериалов -->
+      
+        <ListView x:Name="lvMaterial"
+                  Grid.Row="2" SelectionChanged="lvMaterial_SelectionChanged">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border Width="1200" 
+                            Height="150" 
+                            BorderThickness="1"
+                            BorderBrush="Black"
+                            Background="{Binding GetColor}"
+                            Margin="10">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="4*"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <Image x:Name="imgMaterial"
+                       Width="150"
+                       Height="120"
+                       Margin="20">
+                                <Image.Source>
+                                    <Binding Path="Image">
+                                        <Binding.TargetNullValue>
+                                            <ImageSource>C:\Users\Lenovo\source\repos\TestClothesForHands\TestClothesForHands\Images\picture.png</ImageSource>
+                                        </Binding.TargetNullValue>
+                                    </Binding>
+                                </Image.Source>
+                            </Image>
+
+                            <StackPanel Grid.Column="1" Margin="10" VerticalAlignment="Center">
+                                <TextBlock Text="{Binding GetTypeAndName}"  FontSize="15" Margin="5" TextWrapping="Wrap"/>
+                                <TextBlock Text="{Binding GetMinCount}" FontSize="15" Margin="5" TextWrapping="Wrap"/>
+                                <TextBlock Text="Поставщики:" FontWeight="Bold" FontSize="15" Margin="5" TextWrapping="Wrap"/>
+                            </StackPanel>
+
+                            <TextBlock Text="{Binding GetCount}" Grid.Column="2" FontSize="15" Margin="5" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <!-- Номера страниц -->
+
+        <WrapPanel Grid.Row="3" HorizontalAlignment="Right"
+                   VerticalAlignment="Center"
+                   Margin="20 0">
+            <Button x:Name="btnBack"                    
+                    Height="20"
+                    Content="Назад"
+                    Margin="5"
+                    Background="#FFF"
+                    BorderThickness="0"
+                    FontSize="15"
+                    Click="btnBack_Click"/>
+
+            <Button x:Name="btn1"                    
+                    Height="20"
+                    Content="1"
+                    Margin="5"
+                    Background="#A5E887"
+                    BorderThickness="0"
+                    FontSize="15"/>
+
+            <Button x:Name="btn2"                    
+                    Height="20"
+                    Content="2"
+                    Margin="5"
+                    Background="#FFF"
+                    BorderThickness="0"
+                    FontSize="15"/>
+
+            <Button x:Name="btn3"                    
+                    Height="20"
+                    Content="3"
+                    Margin="5"
+                    Background="#FFF"
+                    BorderThickness="0"
+                    FontSize="15"/>
+
+            <Button x:Name="btnNext"                    
+                    Height="20"
+                    Content="Вперед"
+                    Margin="5"
+                    Background="#FFF"
+                    BorderThickness="0"
+                    FontSize="15"
+                    
+                    Click="btnNext_Click"/>
+        </WrapPanel>
+
+        <Button x:Name="btnEditMinCount"
+                Grid.Row="5"
+                Content="Изменить минимальное количество на..."
+                FontSize="15"
+                Width="300"
+                HorizontalAlignment="Right"
+                Margin="30 0"
+                Visibility="Collapsed"
+                Click="btnEditMinCount_Click"/>
+    </Grid>
+
+</Window>
