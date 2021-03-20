@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TestClothesForHands.EF;
 
 namespace TestClothesForHands.EF
 {
@@ -13,16 +14,15 @@ namespace TestClothesForHands.EF
         public string GetMinCount { get => $"Минимальное количество: {MinCount} шт."; }
 
         public string GetCount { get => $"Остаток: {Count} шт."; }
-
-        public string GetColor 
+        public string GetColor
         {
-            get 
+            get
             {
                 if (Count <= MinCount)
                 {
                     return "#f19292";
                 }
-                else if(Count <= MinCount * 3)
+                else if (Count <= MinCount * 3)
                 {
                     return "#ffba01";
                 }
@@ -30,8 +30,9 @@ namespace TestClothesForHands.EF
                 {
                     return "#fff";
                 }
-
             }
         }
+
+       
     }
 }

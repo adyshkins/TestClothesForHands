@@ -25,6 +25,7 @@ namespace TestClothesForHands.Windows
         public MinCountWindow()
         {
             InitializeComponent();
+            txtMinCount.Text = ClassHelper.MinCountMaterial.getMinCount.MinCount.ToString();
         }
 
         public MinCountWindow(int selectedMaterial)

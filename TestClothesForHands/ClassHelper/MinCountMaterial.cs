@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TestClothesForHands.EF;
 
 namespace TestClothesForHands.ClassHelper
 {
-    class MinCountMaterial
+    public static class MinCountMaterial
     {
-        public static int getMinCount;
+        public static Material getMinCount = new Material();
     }
 }

@@ -38,7 +38,7 @@ namespace TestClothesForHands
 
         private int numPage = 0;
 
-        Material selectedMaterial = new Material();
+        Material selectMaterial;
 
         void Filtr()
         {
@@ -49,11 +49,11 @@ namespace TestClothesForHands
             switch (selectSort)
             {
                 case 0:
-                    listMaterial = listMaterial.OrderBy(i => i.Name).ToList();
+                    listMaterial = listMaterial.OrderBy(i => i.Name).ToList(); // по возрастанию
                     break;
 
                 case 1:
-                    listMaterial = listMaterial.OrderByDescending(i => i.Name).ToList();
+                    listMaterial = listMaterial.OrderByDescending(i => i.Name).ToList(); // по убыванию
                     break;
 
                 case 2:
@@ -81,40 +81,21 @@ namespace TestClothesForHands
 
             var selectFiltr = cmbFiltr.SelectedIndex;
 
-            switch (selectFiltr)
+            if (selectFiltr != 0)
             {
-                case 0:
-                    listMaterial = listMaterial.ToList();
-                    break;
-
-                case 1:
-                    listMaterial = listMaterial.Where(i => i.TypeId == selectFiltr).ToList();
-                    break;
-
-                case 2:
-                    listMaterial = listMaterial.Where(i => i.TypeId == selectFiltr).ToList();
-                    break;
-                case 3:
-                    listMaterial = listMaterial.Where(i => i.TypeId == selectFiltr).ToList();
-                    break;
-
-                default:
-                    break;
+                listMaterial = listMaterial.Where(i => i.TypeId == selectFiltr).ToList();
             }
-
 
             // Поиск
 
             listMaterial = listMaterial.
-                Where(i => i.Name.ToLower().
-                Contains(txtSearch.Text.ToLower())).ToList();
+                Where(i => i.Name.ToLower().Contains(txtSearch.Text.ToLower())).
+                ToList();
 
             // Вывод количества записей 
 
             tbStartCount.Text = "15";
             tbAllCount.Text = listMaterial.Count.ToString();
-
-
             // Вывод по страницам
 
             listMaterial = listMaterial.
@@ -131,16 +112,22 @@ namespace TestClothesForHands
         {
             InitializeComponent();
 
+            btnEditMinCount.Visibility = Visibility.Collapsed;
+
             var typeMaterial = Context.TypeMaterial.ToList();
-            foreach (var item in typeMaterial)
+            foreach (var i in typeMaterial)
             {
-                listFiltr.Add(item.Name);
+                listFiltr.Add(i.Name);
             }
+
             listFiltr.Insert(0, "Все типы");
-            cmbSort.ItemsSource = listSort;
-            cmbSort.SelectedIndex = 0;
             cmbFiltr.ItemsSource = listFiltr;
             cmbFiltr.SelectedIndex = 0;
+
+            cmbSort.ItemsSource = listSort;
+            cmbSort.SelectedIndex = 0;
+
+           
 
 
         }
@@ -187,17 +174,21 @@ namespace TestClothesForHands
         private void lvMaterial_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             btnEditMinCount.Visibility = Visibility.Visible;
-
-            if (lvMaterial.SelectedItems is Material material)
+            if (lvMaterial.SelectedItem is Material material)
             {
-               
+                selectMaterial = material;
             }
         }
 
         private void btnEditMinCount_Click(object sender, RoutedEventArgs e)
         {
-            MinCountWindow minCountWindow = new MinCountWindow(selectedMaterial.MinCount);
+            MinCountWindow minCountWindow = new MinCountWindow();
+            ClassHelper.MinCountMaterial.getMinCount = selectMaterial;
             minCountWindow.ShowDialog();
+
+            selectMaterial.MinCount = ClassHelper.MinCountMaterial.getMinCount.MinCount;
+            Context.SaveChanges();
+            Filtr();
         }
     }
 }

@@ -105,7 +105,7 @@
                                 <Image.Source>
                                     <Binding Path="Image">
                                         <Binding.TargetNullValue>
-                                            <ImageSource>C:\Users\Lenovo\source\repos\TestClothesForHands\TestClothesForHands\Images\picture.png</ImageSource>
+                                            <ImageSource>\Images\picture.png</ImageSource>
                                         </Binding.TargetNullValue>
                                     </Binding>
                                 </Image.Source>
@@ -180,7 +180,6 @@
                 Width="300"
                 HorizontalAlignment="Right"
                 Margin="30 0"
-                Visibility="Collapsed"
                 Click="btnEditMinCount_Click"/>
     </Grid>
 
