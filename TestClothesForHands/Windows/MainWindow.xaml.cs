@@ -38,7 +38,7 @@ namespace TestClothesForHands
 
         private int numPage = 0;
 
-        Material selectMaterial;
+        private Material selectMaterial;
 
         void Filtr()
         {
@@ -96,6 +96,7 @@ namespace TestClothesForHands
 
             tbStartCount.Text = "15";
             tbAllCount.Text = listMaterial.Count.ToString();
+           
             // Вывод по страницам
 
             listMaterial = listMaterial.
@@ -103,7 +104,7 @@ namespace TestClothesForHands
                 Take(15).
                 ToList();
 
-            // переоппределение источника данных для ListView
+            // переопределение источника данных для ListView
 
             lvMaterial.ItemsSource = listMaterial;
         }
@@ -126,9 +127,6 @@ namespace TestClothesForHands
 
             cmbSort.ItemsSource = listSort;
             cmbSort.SelectedIndex = 0;
-
-           
-
 
         }
 
@@ -173,17 +171,17 @@ namespace TestClothesForHands
 
         private void lvMaterial_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            btnEditMinCount.Visibility = Visibility.Visible;
+            btnEditMinCount.Visibility = Visibility.Visible; // стала видимой кнопка изменения минимального количества
+
             if (lvMaterial.SelectedItem is Material material)
             {
-                selectMaterial = material;
+                ClassHelper.MinCountMaterial.getMinCount = material;
             }
         }
 
         private void btnEditMinCount_Click(object sender, RoutedEventArgs e)
         {
             MinCountWindow minCountWindow = new MinCountWindow();
-            ClassHelper.MinCountMaterial.getMinCount = selectMaterial;
             minCountWindow.ShowDialog();
 
             selectMaterial.MinCount = ClassHelper.MinCountMaterial.getMinCount.MinCount;

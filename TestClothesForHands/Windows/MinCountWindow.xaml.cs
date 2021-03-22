@@ -28,18 +28,12 @@ namespace TestClothesForHands.Windows
             txtMinCount.Text = ClassHelper.MinCountMaterial.getMinCount.MinCount.ToString();
         }
 
-        public MinCountWindow(int selectedMaterial)
-        {
-            InitializeComponent();
-
-            txtMinCount.Text = selectedMaterial.ToString();
-        }
-
         private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
             var resultMsg = MessageBox.Show("Нажмите Да для подтверждения", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (resultMsg == MessageBoxResult.Yes)
             {
+                ClassHelper.MinCountMaterial.getMinCount.MinCount = Int32.Parse(txtMinCount.Text);
                 Close();
             }
         }
