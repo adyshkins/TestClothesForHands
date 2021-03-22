@@ -21,7 +21,7 @@ namespace TestClothesForHands
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MaterialWindow : Window
     {
         List<string> listSort = new List<string>()
         {
@@ -109,11 +109,12 @@ namespace TestClothesForHands
             lvMaterial.ItemsSource = listMaterial;
         }
 
-        public MainWindow()
+        public MaterialWindow()
         {
             InitializeComponent();
 
             btnEditMinCount.Visibility = Visibility.Collapsed;
+            btnEditMaterial.Visibility = Visibility.Collapsed;
 
             var typeMaterial = Context.TypeMaterial.ToList();
             foreach (var i in typeMaterial)
@@ -172,6 +173,7 @@ namespace TestClothesForHands
         private void lvMaterial_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             btnEditMinCount.Visibility = Visibility.Visible; // стала видимой кнопка изменения минимального количества
+            btnEditMaterial.Visibility = Visibility.Visible; // стала видимой кнопка изменения материала
 
             if (lvMaterial.SelectedItem is Material material)
             {
@@ -187,6 +189,37 @@ namespace TestClothesForHands
             selectMaterial.MinCount = ClassHelper.MinCountMaterial.getMinCount.MinCount;
             Context.SaveChanges();
             Filtr();
+        }
+        private void btn2_Click(object sender, RoutedEventArgs e)
+        {
+            if (listMaterial.Count > 0)
+            {
+                numPage++;
+                btn1.Content = (numPage + 1).ToString();
+                btn2.Content = (numPage + 2).ToString();
+                btn3.Content = (numPage + 3).ToString();
+            }
+            Filtr();
+        }
+
+        private void btn3_Click(object sender, RoutedEventArgs e)
+        {
+            if (listMaterial.Count > 0)
+            {
+                numPage+=2;
+                btn1.Content = (numPage + 2).ToString();
+                btn2.Content = (numPage + 3).ToString();
+                btn3.Content = (numPage + 4).ToString();
+            }
+            Filtr();
+        }
+
+        private void btnAddMaterial_Click(object sender, RoutedEventArgs e)
+        {
+            AddEditMateralWindow addEditMateralWindow = new AddEditMateralWindow();
+            this.Opacity = 0.3;
+            addEditMateralWindow.ShowDialog();
+            this.Opacity = 1;
         }
     }
 }
