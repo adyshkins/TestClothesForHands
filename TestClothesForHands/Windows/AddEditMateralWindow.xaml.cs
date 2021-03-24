@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Collections.ObjectModel;
 using TestClothesForHands.EF;
 using TestClothesForHands.Windows;
 using static TestClothesForHands.EF.AppData;
@@ -25,6 +26,9 @@ namespace TestClothesForHands.Windows
     public partial class AddEditMateralWindow : Window
     {
         string pathPhoto = null;
+
+        ObservableCollection<Supplier> supplierList = new ObservableCollection<Supplier>(); 
+
         public AddEditMateralWindow()
         {
             InitializeComponent();
@@ -36,6 +40,11 @@ namespace TestClothesForHands.Windows
             cmbUnitMaterial.ItemsSource = Context.UntType.ToList();
             cmbUnitMaterial.DisplayMemberPath = "Unit";
             cmbUnitMaterial.SelectedIndex = 0;
+
+
+            cmbSupplier.ItemsSource = Context.Supplier.ToList();
+            cmbSupplier.DisplayMemberPath = "Name";
+
         }
 
         private void btnChooseImg_Click(object sender, RoutedEventArgs e)
@@ -74,8 +83,24 @@ namespace TestClothesForHands.Windows
                 addMaterial.CountInBox = Convert.ToInt32(txtCountInBox.Text);
                 addMaterial.TypeDimension = cmbUnitMaterial.SelectedIndex + 1;
 
-                Context.Material.Add(addMaterial);
+                Context.Material.Add(addMaterial); // добавление материала
+
+                // добавление поставщиков для материала
+
+
                 Context.SaveChanges();
+
+                foreach (var item in supplierList)
+                {
+                    Context.MaterialSupp.Add(new MaterialSupp
+                    {
+                        IdMaterial = addMaterial.ID,
+                        IdSupplier = item.ID
+                    });
+                }
+
+                Context.SaveChanges();
+
                 Close();
             }
         }
@@ -83,6 +108,16 @@ namespace TestClothesForHands.Windows
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void btnAddSup_Click(object sender, RoutedEventArgs e)
+        {
+            if ((supplierList.Where(i => i.ID == (cmbSupplier.SelectedValue as Supplier).ID).ToList().Count) == 0)
+            {
+                supplierList.Add(cmbSupplier.SelectedValue as Supplier);
+            }
+            
+            lvListSupplier.ItemsSource = supplierList;
         }
     }
 }
