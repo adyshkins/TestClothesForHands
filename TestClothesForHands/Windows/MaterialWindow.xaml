@@ -198,7 +198,8 @@
                     Content="Изменить материал"
                     FontSize="15"
                     HorizontalAlignment="Right"
-                    Margin="30 0"/>
+                    Margin="30 0"
+                    Click="btnEditMaterial_Click"/>
 
             <Button x:Name="btnEditMinCount"
                 Content="Изменить минимальное количество на..."

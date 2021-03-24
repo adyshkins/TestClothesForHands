@@ -47,6 +47,33 @@ namespace TestClothesForHands.Windows
 
         }
 
+        public AddEditMateralWindow(Material material)
+        {
+            InitializeComponent();
+
+            cmbTypeMAterial.ItemsSource = Context.TypeMaterial.ToList();
+            cmbTypeMAterial.DisplayMemberPath = "Name";            
+
+            cmbUnitMaterial.ItemsSource = Context.UntType.ToList();
+            cmbUnitMaterial.DisplayMemberPath = "Unit";           
+
+
+            cmbSupplier.ItemsSource = Context.Supplier.ToList();
+            cmbSupplier.DisplayMemberPath = "Name";
+
+            txtName.Text = material.Name;
+            txtCount.Text = material.Count.ToString();
+            txtCountInBox.Text = material.CountInBox.ToString();
+            txtMinCount.Text = material.MinCount.ToString();
+            txtPrice.Text = material.Price.ToString();
+            cmbTypeMAterial.SelectedIndex = material.TypeId - 1;
+            cmbUnitMaterial.SelectedIndex = material.TypeDimension - 1;
+            //imgMaterial.Source = new BitmapImage(new Uri(material.Image));
+
+            var supMaterial = Context.MaterialSupp.Where(i => i.IdMaterial == material.ID).ToList();
+
+        }
+
         private void btnChooseImg_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();

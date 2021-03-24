@@ -223,5 +223,14 @@ namespace TestClothesForHands
             Filtr();
             this.Opacity = 1;
         }
+
+        private void btnEditMaterial_Click(object sender, RoutedEventArgs e)
+        {
+            AddEditMateralWindow addEditMateralWindow = new AddEditMateralWindow(lvMaterial.SelectedItem as Material);
+            this.Opacity = 0.3;
+            addEditMateralWindow.ShowDialog();
+            Filtr();
+            this.Opacity = 1;
+        }
     }
 }
