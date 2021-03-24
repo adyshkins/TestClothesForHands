@@ -9,6 +9,6 @@ namespace TestClothesForHands.ClassHelper
 {
     public static class MinCountMaterial
     {
-        public static Material getMinCount = new Material();
+        public static int getMinCount;        
     }
 }

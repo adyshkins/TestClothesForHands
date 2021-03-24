@@ -25,7 +25,7 @@ namespace TestClothesForHands.Windows
         public MinCountWindow()
         {
             InitializeComponent();
-            txtMinCount.Text = ClassHelper.MinCountMaterial.getMinCount.MinCount.ToString();
+            txtMinCount.Text = ClassHelper.MinCountMaterial.getMinCount.ToString();
         }
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
@@ -33,7 +33,7 @@ namespace TestClothesForHands.Windows
             var resultMsg = MessageBox.Show("Нажмите Да для подтверждения", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (resultMsg == MessageBoxResult.Yes)
             {
-                ClassHelper.MinCountMaterial.getMinCount.MinCount = Int32.Parse(txtMinCount.Text);
+                ClassHelper.MinCountMaterial.getMinCount = Int32.Parse(txtMinCount.Text);
                 Close();
             }
         }

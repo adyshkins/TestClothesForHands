@@ -38,7 +38,7 @@ namespace TestClothesForHands
 
         private int numPage = 0;
 
-        private Material selectMaterial;
+        public List<Material> selectMaterial;
 
         void Filtr()
         {
@@ -173,21 +173,22 @@ namespace TestClothesForHands
         private void lvMaterial_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             btnEditMinCount.Visibility = Visibility.Visible; // стала видимой кнопка изменения минимального количества
-            btnEditMaterial.Visibility = Visibility.Visible; // стала видимой кнопка изменения материала
+            btnEditMaterial.Visibility = Visibility.Visible; // стала видимой кнопка изменения материала  
 
-            if (lvMaterial.SelectedItem is Material material)
-            {
-                ClassHelper.MinCountMaterial.getMinCount = material;
-            }
         }
 
         private void btnEditMinCount_Click(object sender, RoutedEventArgs e)
         {
+            selectMaterial = lvMaterial.SelectedItems as List<Material>;
+
+            if (selectMaterial != null)
+            {
+                ClassHelper.MinCountMaterial.getMinCount = selectMaterial.Max(i => i.MinCount);
+            }
+
             MinCountWindow minCountWindow = new MinCountWindow();
             minCountWindow.ShowDialog();
 
-            selectMaterial.MinCount = ClassHelper.MinCountMaterial.getMinCount.MinCount;
-            Context.SaveChanges();
             Filtr();
         }
         private void btn2_Click(object sender, RoutedEventArgs e)
@@ -219,6 +220,7 @@ namespace TestClothesForHands
             AddEditMateralWindow addEditMateralWindow = new AddEditMateralWindow();
             this.Opacity = 0.3;
             addEditMateralWindow.ShowDialog();
+            Filtr();
             this.Opacity = 1;
         }
     }
